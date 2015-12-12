@@ -6,6 +6,7 @@ import time
 thetime = time.strftime("%H:%M:%S")
 datet = time.strftime("%d-%m-%Y")
 
+# open control file and read VLAN and subnet information
 file = open('control.txt')
 for line in file:
 	a, b = line.strip().split()
@@ -13,11 +14,9 @@ for line in file:
 	net_addr = b
 	net_add = unicode(net_addr)
 
-#        dx = (thetime+"_"+datet)
- #       summary = 'summary_%s.txt' % dx
+# open and append summary file to store summary of output
 	summary = "summary.txt"
         tabs = open(summary, 'a')
-
 
 # Create the network
 	ip_net = ipaddress.ip_network(net_add)
@@ -25,11 +24,13 @@ for line in file:
 # Get all hosts on that network
 	all_hosts = list(ip_net.hosts())
 
+# create output file using vlan and time/date information
         ex = ("_vlan:"+vlanid+"-"+thetime+"_"+datet)
         filename = 'scratch%s.txt' % ex
         print "creating file called", filename, "containing output of scan"
 	sfile = open(filename, 'w')
 
+# loop over all IPs found in networks defined in control file
 	for i in range(len(all_hosts)):
 		thetime = time.strftime("%H:%M:%S")
 		datet = time.strftime("%d-%m-%Y")
@@ -52,7 +53,8 @@ for line in file:
 
 	print "moving output to sql database"
 
-	conn = sqlite3.connect("database.db") # or use :memory: to put it in RAM
+# connect to database
+	conn = sqlite3.connect("database.db") 
 	cursor = conn.cursor()
 	cursor.execute("CREATE TABLE IF NOT EXISTS tableofdata__ (vlan, ip, response_in_ms, state, time, date); ")
 
