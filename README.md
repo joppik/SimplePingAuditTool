@@ -14,3 +14,5 @@ and then writes output to sqlite3 database and scratch file. A summmary file is 
 
 script calls "fping -C 1 -q <IP>"
 
+requires sqlite3, see comments for database name.
+
