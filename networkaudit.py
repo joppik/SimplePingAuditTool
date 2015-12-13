@@ -87,10 +87,10 @@ for line in file:
         count = 0
         for row in cursor.execute("""SELECT ip,state FROM tableofdata__ WHERE state="up" AND vlan=?""", t):
                 count +=1
-        print "we have ", count, " nodes up in vlan", t
+        print "we have ", count, " nodes up in vlan ", vlanid
         strcount = str(count)
         strt = str(t)
-        tabs.write("At "+ thetime + " on " + datet +" we had " + strcount + " nodes up in vlan" + strt + "\n")
+        tabs.write("At "+ thetime + " on " + datet +" we had " + strcount + " nodes up in vlan " + vlanid + "\n")
         tabs.close()
         conn.commit()
 
